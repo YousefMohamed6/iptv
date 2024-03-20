@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em;
+        }
+
+        .api-section {
+            max-width: 800px;
+            margin: 2em auto;
+            padding: 1em;
+            border: 1px solid #ddd;
+        }
+
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+    </style>
+    <title>API Documentation</title>
+</head>
+<body>
+
+    <header>
+        <h1>API Documentation</h1>
+    </header>
+
+    <section class="api-section">
+        <h2>1. Playlist Data Request</h2>
+        <p><strong>GET Request:</strong></p>
+        <pre><code>http://ac-mega.pro/player_api.php?&amp;username=24562134513&amp;password=34153454135</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>
+{
+    "user_info": {
+        "username": "24562134513",
+        "password": "34153454135",
+        "message": "Welcome To CloudStream Panel Business Edition Pro",
+        "auth": 1,
+        "status": "Active",
+        "exp_date": "1708051154",
+        "is_trial": "0",
+        "active_cons": "0",
+        "created_at": "1705156213",
+        "max_connections": "1",
+        "allowed_output_formats": [
+            "m3u8",
+            "ts",
+            "rtmp"
+        ]
+    },
+    "server_info": {
+        "url": "tvmega.pro",
+        "port": "80",
+        "https_port": "2095",
+        "server_protocol": "http",
+        "rtmp_port": "8888",
+        "timezone": "Asia/Beirut",
+        "timestamp_now": 1705506196,
+        "time_now": "2024-01-17 17:43:16"
+    }
+}
+        </code></pre>
+    </section>
+
+    <section class="api-section">
+        <h2>2. Live Categories Request</h2>
+        <p><strong>GET Request:</strong></p>
+        <pre><code>http://ac-mega.pro/player_api.php?action=get_live_categories&amp;username=24562134513&amp;password=34153454135</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>
+[
+    {
+        "category_id": "796",
+        "category_name": " ( قران كريم )",
+        "parent_id": 0
+    },
+    {
+        "category_id": "845",
+        "category_name": "Bein [ P2P ] SD",
+        "parent_id": 0
+    }
+]
+        </code></pre>
+    </section>
+
+    <section class="api-section">
+        <h2>3. Movies Categories Request</h2>
+        <p><strong>GET Request:</strong></p>
+        <pre><code>http://ac-mega.pro/player_api.php?action=get_vod_categories&amp;username=24562134513&amp;password=34153454135</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>
+[
+    {
+        "category_id": "876",
+        "category_name": "India [2024]",
+        "parent_id": 0
+    },
+    {
+        "category_id": "856",
+        "category_name": "BOX OFFICE",
+        "parent_id": 0
+    }
+]
+        </code></pre>
+    </section>
+
+    <section class="api-section">
+        <h2>4. Series Categories Request</h2>
+        <p><strong>GET Request:</strong></p>
+        <pre><code>http://ac-mega.pro/player_api.php?action=get_series_categories&amp;username=24562134513&amp;password=34153454135</code></pre>
+        <p><strong>Response:</strong></p>
+        <pre><code>
+[
+    {
+    "category_id": "336",
+    "category_name": "Showing  NOW AR   ",
+    "parent_id": 0
+    },
+    {
+    "category_id": "337",
+    "category_name": "Showing NOW EN",
+    "parent_id": 0
+    },
+    {
+    "category_id": "338",
+    "category_name": "Showing NOW TR",
+    "parent_id": 0
+    }
+]
+        </code></pre>
+    </section>
+
+<section class="api-section">
+    <h2>Additional API Requests</h2>
+
+    <h3>Authentication:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X</code></pre>
+
+    <h3>GET Live Stream Categories:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_live_categories</code></pre>
+
+    <h3>GET VOD Stream Categories:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_vod_categories</code></pre>
+
+    <h3>GET SERIES Categories:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_series_categories</code></pre>
+
+    <h3>GET LIVE Streams:</h3>
+    <p><strong>GET Request (All LIVE Streams):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_live_streams</code></pre>
+    <p><strong>GET Request (All LIVE Streams in selected category ONLY):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_live_streams&amp;category_id=X</code></pre>
+
+    <h3>GET VOD Streams:</h3>
+    <p><strong>GET Request (All VOD Streams):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_vod_streams</code></pre>
+    <p><strong>GET Request (All VOD Streams in selected category ONLY):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_vod_streams&amp;category_id=X</code></pre>
+
+    <h3>GET SERIES Streams:</h3>
+    <p><strong>GET Request (All Series):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_series</code></pre>
+    <p><strong>GET Request (All Series in selected category ONLY):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_series&amp;category_id=X</code></pre>
+
+    <h3>GET SERIES Info:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_series_info&amp;series_id=X</code></pre>
+
+    <h3>GET VOD Info:</h3>
+    <p><strong>GET Request (Info such as video codecs, duration, description, directors for 1 VOD):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_vod_info&amp;vod_id=X</code></pre>
+
+    <h3>GET short_epg for LIVE Streams:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_short_epg&amp;stream_id=X</code></pre>
+    <p><strong>GET Request (Specify a limit, default is 4 EPG listings):</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_short_epg&amp;stream_id=X&amp;limit=X</code></pre>
+
+    <h3>GET ALL EPG for LIVE Streams:</h3>
+    <p><strong>GET Request:</strong></p>
+    <pre><code>http://domin.com/player_api.php?username=X&amp;password=X&amp;action=get_simple_data_table&amp;stream_id=X</code></pre>
+
+    <h3>Full EPG List for all Streams:</h3>
+    <pre><code>xmltv.php?username=X&amp;password=X</code></pre>
+
+    <p><strong>This project requires requests to have the following User Agent:</strong></p>
+    <pre><code>Roy_Player_App</code></pre>
+    <p>Make sure to set the User Agent in your requests to ensure proper communication with the project.</p>
+</section>
+
+
+</body>
+</html>
