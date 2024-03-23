@@ -1,9 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:iptv/features/download/views/download_view.dart';
-import 'package:iptv/features/home/home/view/home_view.dart';
-import 'package:iptv/features/home/live/live_view.dart';
-import 'package:iptv/features/home/movies/movies_view.dart';
-import 'package:iptv/features/home/series/series_view.dart';
+import 'package:iptv/features/streams/amazon/amazon_view.dart';
+import 'package:iptv/features/home/view/home_view.dart';
+import 'package:iptv/features/streams/kids/kids_view.dart';
+import 'package:iptv/features/streams/live/live_view.dart';
+import 'package:iptv/features/streams/movies/movies_view.dart';
+import 'package:iptv/features/streams/netflix/netflix_view.dart';
+import 'package:iptv/features/streams/series/series_view.dart';
+import 'package:iptv/features/streams/shahid/shahid_view.dart';
+import 'package:iptv/features/streams/tops/tops_view.dart';
 import 'package:iptv/features/login/view/login_view.dart';
 
 abstract class RouteManager {
@@ -36,6 +41,31 @@ abstract class RouteManager {
         path: SeriesView.routePath,
         name: SeriesView.routeName,
         builder: (context, state) => const SeriesView(),
+      ),
+      GoRoute(
+        path: NetflixView.routePath,
+        name: NetflixView.routeName,
+        builder: (context, state) => const NetflixView(),
+      ),
+      GoRoute(
+        path: ShahidView.routePath,
+        name: ShahidView.routeName,
+        builder: (context, state) => const ShahidView(),
+      ),
+      GoRoute(
+        path: KidsView.routePath,
+        name: KidsView.routeName,
+        builder: (context, state) => const KidsView(),
+      ),
+      GoRoute(
+        path: AmazonView.routePath,
+        name: AmazonView.routeName,
+        builder: (context, state) => const AmazonView(),
+      ),
+      GoRoute(
+        path: TopsView.routePath,
+        name: TopsView.routeName,
+        builder: (context, state) => const TopsView(),
       ),
     ],
   );

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:iptv/core/uitls/colors_manager.dart';
+import 'package:iptv/core/uitls/fonts_manager.dart';
+import 'package:iptv/core/uitls/styles_manager.dart';
 
 class ShowMessage {
   static void show({required String msg}) {
     ShowMessage._toast(msg: msg);
-    // : ShowMessage._snackBar(context, msg: msg);
   }
 
   static void _toast({required String msg}) {
@@ -18,27 +20,29 @@ class ShowMessage {
         fontSize: 16.0);
   }
 
-  // static void _snackBar(BuildContext context, {required String msg}) {
-  //   ScaffoldMessenger.of(context).showSnackBar(
-  //     SnackBar(
-  //       content: CustomText(
-  //         text: msg,
-  //         fontSize: 16.0,
-  //         color: Colors.white,
-  //         textAlign: TextAlign.center,
-  //       ),
-  //       backgroundColor: Colors.grey,
-  //       padding: const EdgeInsets.all(16),
-  //       margin: const EdgeInsets.symmetric(horizontal: 125, vertical: 8),
-  //       behavior: SnackBarBehavior.floating,
-  //       duration: const Duration(seconds: 3),
-  //       shape: const OutlineInputBorder(
-  //         borderSide: BorderSide.none,
-  //         borderRadius: BorderRadius.all(
-  //           Radius.circular(16),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+  static void snackBar(BuildContext context, {required String msg}) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          msg,
+          style: StyleManager.textStyle16.copyWith(
+            color: Colors.white,
+            fontFamily: FontFamily.lexend,
+          ),
+          textAlign: TextAlign.center,
+        ),
+        backgroundColor: ColorManager.background,
+        padding: const EdgeInsets.all(16),
+        margin: const EdgeInsets.symmetric(horizontal: 125, vertical: 8),
+        behavior: SnackBarBehavior.floating,
+        duration: const Duration(seconds: 3),
+        shape: const OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(
+            Radius.circular(16),
+          ),
+        ),
+      ),
+    );
+  }
 }

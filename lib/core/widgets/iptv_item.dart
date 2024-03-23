@@ -8,7 +8,12 @@ class IPTVItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Image.asset(imagePath),
+      child: Image.asset(
+        fit: BoxFit.fill,
+        imagePath,
+        width: MediaQuery.sizeOf(context).width * 0.15,
+        height: MediaQuery.sizeOf(context).height * 0.5,
+      ),
     );
   }
 }

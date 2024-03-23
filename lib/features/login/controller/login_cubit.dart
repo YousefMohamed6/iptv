@@ -26,6 +26,16 @@ class LoginCubit extends Cubit<LoginState> {
     await referance.setString('url', seletedProvider!.url);
   }
 
+  Future<void> getUserData() async {
+    final referance = await SharedPreferences.getInstance();
+    String? name = referance.getString('name');
+    if (name != null) {
+      emit(UserFound());
+    } else {
+      getProviders();
+    }
+  }
+
   void visablePassword() {
     obSecureText = !obSecureText;
     _setState();
@@ -62,8 +72,8 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  Future<void> getAllProvider() async {
-    emit(Loading());
+  Future<void> getProviders() async {
+    emit(ProviderLoading());
     try {
       List<ProviderModel> allProvider = [];
       String url = "https://royplayer.com/api/ios/supplier.php";

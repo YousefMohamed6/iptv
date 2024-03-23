@@ -8,7 +8,7 @@ class DownloadView extends StatelessWidget {
   static const String routeName = "Download";
   @override
   Widget build(BuildContext context) {
-  return const SafeArea(
+    return const SafeArea(
       child: Scaffold(
         backgroundColor: ColorManager.background,
         body: DownloadViewbody(),

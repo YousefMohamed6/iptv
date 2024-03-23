@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:iptv/features/home/cubit/home_cubit.dart';
 import 'package:iptv/features/login/controller/login_cubit.dart';
 import 'package:iptv/features/login/models/provider_model.dart';
 
@@ -13,6 +14,7 @@ class ProviderItem extends StatelessWidget {
         BlocProvider.of<LoginCubit>(context).selectProvider(
           provider: provider,
         );
+        BlocProvider.of<HomeCubit>(context).currentProvider = provider;
       },
       child: Stack(
         alignment: Alignment.topLeft,

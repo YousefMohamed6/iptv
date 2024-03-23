@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:iptv/core/uitls/fonts_manager.dart';
+import 'package:iptv/core/uitls/styles_manager.dart';
 
 class CutomTextFormFiled extends StatelessWidget {
   const CutomTextFormFiled({
@@ -30,6 +32,9 @@ class CutomTextFormFiled extends StatelessWidget {
       },
       decoration: InputDecoration(
         hintText: hintText,
+        hintStyle: StyleManager.textStyle16.copyWith(
+          fontFamily: FontFamily.lexend,
+        ),
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
         border: OutlineInputBorder(

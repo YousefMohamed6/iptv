@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iptv/core/uitls/route_manager.dart';
-import 'package:iptv/features/home/home/cubit/home_cubit.dart';
+import 'package:iptv/features/home/cubit/home_cubit.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp._internal();

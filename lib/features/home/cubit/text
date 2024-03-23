@@ -1,0 +1,69 @@
+Future<void> getAllLive() async {
+    String categoryUrl =
+        "${user!.providerUrl}player_api.php?action=get_live_categories&username=${user!.userName}&password=${user!.password}";
+    String channalsUrl =
+        "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}&action=get_live_streams&category_id=";
+    allLive = await getData(
+      categoryUrl: categoryUrl,
+      channalsUrl: channalsUrl,
+      state: LiveSuccess(),
+    );
+  }
+  
+ Future<List<IPTVModel>> getData({
+    required String categoryUrl,
+    required String channalsUrl,
+    required HomeState state,
+  }) async {
+    List<IPTVModel> data = [];
+    List<CategoryModel> allCategories = [];
+    allCategories = await getAllCategories(
+      categoryUrl: categoryUrl,
+      state: state,
+    );
+    for (int i = 0; i < allCategories.length; i++) {
+      List<ChannalModel> channals = [];
+      channals = await getAllChannals(
+          channalsUrl: "$channalsUrl${allCategories[i].id}");
+      data.add(
+        IPTVModel.fromData(
+          category: allCategories[i],
+          allChannal: channals,
+        ),
+      );
+    }
+    return data;
+  }
+
+  Future<void> getAllMovies() async {
+    try {
+      String categoryUrl =
+          "${user!.providerUrl}player_api.php?action=get_vod_categories&username=${user!.userName}&password=${user!.password}";
+      String channalsUrl =
+          "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}&action=get_vod_streams&category_id=";
+      //response of all category
+      allMovies = await getData(
+        categoryUrl: categoryUrl,
+        channalsUrl: channalsUrl,
+        state: MoviesSuccess(),
+      );
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  Future<void> getAllSeries() async {
+    try {
+      String categoryUrl =
+          "${user!.providerUrl}player_api.php?action=get_series_categories&username=${user!.userName}&password=${user!.password}";
+      String channalsUrl =
+          "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}&action=get_series&category_id=";
+      allSeries = await getData(
+        categoryUrl: categoryUrl,
+        channalsUrl: channalsUrl,
+        state: SeriseSuccess(),
+      );
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+    }
+  }

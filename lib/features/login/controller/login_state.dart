@@ -5,7 +5,9 @@ sealed class LoginState {}
 
 final class LoginInitial extends LoginState {}
 
-final class Loading extends LoginState {}
+final class ProviderLoading extends LoginState {}
+
+final class UserFound extends LoginState {}
 
 final class UnselectedProvider extends LoginState {}
 

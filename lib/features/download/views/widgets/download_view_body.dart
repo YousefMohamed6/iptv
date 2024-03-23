@@ -4,19 +4,17 @@ import 'package:go_router/go_router.dart';
 import 'package:iptv/core/uitls/assets_manager.dart';
 import 'package:iptv/core/uitls/fonts_manager.dart';
 import 'package:iptv/core/uitls/styles_manager.dart';
-import 'package:iptv/features/home/home/cubit/home_cubit.dart';
-import 'package:iptv/features/home/home/view/home_view.dart';
+import 'package:iptv/features/home/cubit/home_cubit.dart';
+import 'package:iptv/features/home/view/home_view.dart';
 
 class DownloadViewbody extends StatelessWidget {
   const DownloadViewbody({super.key});
 
   @override
   Widget build(BuildContext context) {
-    BlocProvider.of<HomeCubit>(context).getAllData();
-    
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
-        if (state is GetAllDataSuccess) {
+        if (state is LoadingDataSuccess) {
           context.push(HomeView.rountePath);
         }
       },
