@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:iptv/core/widgets/category_view.dart';
+import 'package:iptv/core/widgets/category/category_view.dart';
+import 'package:iptv/core/widgets/channals/channal_view.dart';
 import 'package:iptv/features/home/cubit/home_cubit.dart';
-import 'package:iptv/features/streams/live/widgets/live_view_body.dart';
 import 'package:iptv/features/streams/series/controller/series_cubit.dart';
 
 class SeriesViewBody extends StatelessWidget {
@@ -21,6 +21,8 @@ class SeriesViewBody extends StatelessWidget {
                 BlocProvider.of<SeriesCubit>(context)
                     .getSeriesChannalsById(id: id);
               },
+              channals: BlocProvider.of<SeriesCubit>(context).seriesChannals,
+              searchCtrl: BlocProvider.of<SeriesCubit>(context).searchCtrl,
             ),
             ChannallView(
               channals: BlocProvider.of<SeriesCubit>(context).seriesChannals,

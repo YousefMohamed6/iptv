@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iptv/core/services/api_client.dart';
 import 'package:iptv/features/login/models/provider_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:iptv/features/login/models/user_model.dart';
 
 part 'login_state.dart';
 
@@ -20,20 +21,12 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   Future<void> saveUserData() async {
-    final referance = await SharedPreferences.getInstance();
-    await referance.setString('name', email.text);
-    await referance.setString('password', password.text);
-    await referance.setString('url', seletedProvider!.url);
-  }
-
-  Future<void> getUserData() async {
-    final referance = await SharedPreferences.getInstance();
-    String? name = referance.getString('name');
-    if (name != null) {
-      emit(UserFound());
-    } else {
-      getProviders();
-    }
+    final userBox = Hive.box<UserModel>('user');
+    var user = UserModel(
+        userName: email.text,
+        password: password.text,
+        providerUrl: seletedProvider!.url);
+    await userBox.add(user);
   }
 
   void visablePassword() {
@@ -53,17 +46,21 @@ class LoginCubit extends Cubit<LoginState> {
       try {
         Map<String, dynamic> data = await ApiClient.get(url: url);
         int auth = data['user_info']['auth'];
-        String? message = data['user_info']['message'];
-        if (auth == 0) {
-          emit(LoginFailure(exceptionMessage: "error in Email or Password"));
-        } else {
+        if (auth == 1) {
+          String message = data['user_info']['message'];
           await saveUserData();
-          emit(LoginSucess(successMessage: message!));
+          emit(LoginSucess(successMessage: message));
+        } else {
+          emit(
+            LoginFailure(
+              exceptionMessage: "error in Email or Password",
+            ),
+          );
         }
       } on Exception catch (_) {
         emit(
           LoginFailure(
-            exceptionMessage: "error in Internet",
+            exceptionMessage: "error in Email or Password",
           ),
         );
       }
@@ -76,8 +73,9 @@ class LoginCubit extends Cubit<LoginState> {
     emit(ProviderLoading());
     try {
       List<ProviderModel> allProvider = [];
-      String url = "https://royplayer.com/api/ios/supplier.php";
-      List<dynamic> data = await ApiClient.get(url: url);
+      String url = "http://royplayer.com/api/ios/supplier.php";
+      var data = await ApiClient.get(url: url);
+
       for (int i = 0; i < data.length; i++) {
         ProviderModel providerModel = ProviderModel.fromJson(
           data[i],

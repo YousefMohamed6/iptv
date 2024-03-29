@@ -15,7 +15,7 @@ class DownloadViewbody extends StatelessWidget {
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) {
         if (state is LoadingDataSuccess) {
-          context.push(HomeView.rountePath);
+          context.go(HomeView.rountePath);
         }
       },
       child: Column(

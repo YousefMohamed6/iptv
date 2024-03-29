@@ -7,9 +7,9 @@ final class LoginInitial extends LoginState {}
 
 final class ProviderLoading extends LoginState {}
 
-final class UserFound extends LoginState {}
-
 final class UnselectedProvider extends LoginState {}
+
+final class FoundUser extends LoginState {}
 
 final class LoginSucess extends LoginState {
   final String successMessage;

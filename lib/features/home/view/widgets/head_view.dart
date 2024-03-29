@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 import 'package:iptv/core/uitls/assets_manager.dart';
 import 'package:iptv/core/uitls/fonts_manager.dart';
 import 'package:iptv/core/uitls/styles_manager.dart';
-import 'package:iptv/core/widgets/iptv_icon.dart';
+import 'package:iptv/core/widgets/custom_logo.dart';
 
 class HeadView extends StatelessWidget {
   const HeadView({super.key});
@@ -12,7 +12,7 @@ class HeadView extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const IptvImage(),
+        const CustomLogo(),
         Column(
           children: [
             Image.asset(

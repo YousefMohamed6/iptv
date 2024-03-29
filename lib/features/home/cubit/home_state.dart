@@ -13,4 +13,8 @@ final class MoviesSuccess extends HomeState {}
 
 final class SeriseSuccess extends HomeState {}
 
-final class GetAllDataFaliure extends HomeState {}
+final class LoadingDataFaliure extends HomeState {}
+
+final class LoadLocalDateSuccess extends HomeState {}
+
+final class LoadLocalDateFailure extends HomeState {}

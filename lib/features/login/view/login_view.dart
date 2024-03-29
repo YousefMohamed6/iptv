@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iptv/core/uitls/colors_manager.dart';
 import 'package:iptv/core/widgets/back_ground.dart';
 import 'package:iptv/features/login/controller/login_cubit.dart';
-import 'package:iptv/features/login/view/widgets/login_view_body.dart';
+import 'package:iptv/features/login/view/login_view_body.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});
@@ -12,11 +12,13 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginCubit()..getUserData(),
-      child: const Scaffold(
-        backgroundColor: ColorManager.background,
-        body: Background(
-          child: LoginViewBody(),
+      create: (context) => LoginCubit()..getProviders(),
+      child: const SafeArea(
+        child: Scaffold(
+          backgroundColor: ColorManager.background,
+          body: Background(
+            child: LoginViewBody(),
+          ),
         ),
       ),
     );

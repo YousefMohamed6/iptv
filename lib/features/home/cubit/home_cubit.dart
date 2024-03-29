@@ -1,12 +1,12 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_vlc_player/flutter_vlc_player.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iptv/core/services/api_client.dart';
 import 'package:iptv/features/home/model/category_model.dart';
 import 'package:iptv/features/home/model/channal_model.dart';
 import 'package:iptv/features/login/models/provider_model.dart';
 import 'package:iptv/features/login/models/user_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'home_state.dart';
 
@@ -17,7 +17,42 @@ class HomeCubit extends Cubit<HomeState> {
   List<CategoryModel> seriseCategorys = [];
   UserModel? user;
   int channalsId = 0;
-  ProviderModel? currentProvider;
+  ProviderModel? provider;
+  VlcPlayerController playerController = VlcPlayerController.network(
+    'http://ac-mega.pro:80/live/haya1/saleh2/345191.ts',
+    hwAcc: HwAcc.auto,
+    autoPlay: false,
+    allowBackgroundPlayback: true,
+    autoInitialize: true,
+    options: VlcPlayerOptions(),
+  );
+  String streamLink = 'http://ac-mega.pro:80/live/haya1/saleh2/345191.ts';
+
+  Future<void> getUserData() async {
+    try {
+      final userBox = Hive.box<UserModel>('user');
+      user = userBox.values.toList().first;
+      emit(LoadLocalDateSuccess());
+    } on Exception catch (_) {
+      emit(LoadLocalDateFailure());
+    }
+  }
+
+  void selectCategory({required int id}) {
+    channalsId = id;
+  }
+
+  Future<List<CategoryModel>> getCategories({
+    required String categoryUrl,
+  }) async {
+    List<CategoryModel> allCategories = [];
+    var categorise = await ApiClient.get(url: categoryUrl);
+    for (int i = 0; i < categorise.length; i++) {
+      allCategories.add(CategoryModel.fromJson(categorise[i]));
+    }
+    return allCategories;
+  }
+
   Future<void> getLiveCategorys() async {
     String categoryUrl =
         "${user!.providerUrl}player_api.php?action=get_live_categories&username=${user!.userName}&password=${user!.password}";
@@ -36,31 +71,22 @@ class HomeCubit extends Cubit<HomeState> {
     seriseCategorys = await getCategories(categoryUrl: categoryUrl);
   }
 
-  Future<List<CategoryModel>> getCategories({
-    required String categoryUrl,
-  }) async {
-    List<CategoryModel> allCategories = [];
-    var categorise = await ApiClient.get(url: categoryUrl);
-    for (int i = 0; i < categorise.length; i++) {
-      allCategories.add(CategoryModel.fromJson(categorise[i]));
+  Future<void> loadData() async {
+    try {
+      await getUserData();
+      await getLiveCategorys();
+      await getMoviesCategorys();
+      await getSeriesCategorys();
+      emit(LoadingDataSuccess());
+    } on Exception catch (_) {
+      emit(LoadingDataFaliure());
     }
-    return allCategories;
   }
 
-  void selectCategory({required int id}) {
-    channalsId = id;
-  }
-
-  Future<List<CategoryModel>> getAllCategories({
-    required String categoryUrl,
-    required HomeState state,
-  }) async {
-    List<CategoryModel> allCategories = [];
-    var categorise = await ApiClient.get(url: categoryUrl);
-    for (int i = 0; i < categorise.length; i++) {
-      allCategories.add(CategoryModel.fromJson(categorise[i]));
-    }
-    return allCategories;
+  void getStreamLink({required ChannalModel channal}) {
+    streamLink =
+        "${user!.providerUrl}${channal.streamType}/${user!.userName}/${user!.password}/${channal.streamId}.m3u8";
+    playerController.setMediaFromNetwork(streamLink);
   }
 
   Future<List<ChannalModel>> getAllChannals({
@@ -78,7 +104,7 @@ class HomeCubit extends Cubit<HomeState> {
     required int id,
   }) async {
     String categoryUrl =
-        "http://ac-mega.pro/player_api.php?username=haya1&password=saleh2&action=get_live_categories&category_id=";
+        "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}&action=get_live_categories&category_id=";
     dynamic data = await ApiClient.get(url: "$categoryUrl$id}");
     return data;
   }
@@ -87,7 +113,7 @@ class HomeCubit extends Cubit<HomeState> {
     required int id,
   }) async {
     String categoryUrl =
-        "http://ac-mega.pro/player_api.php?username=haya1&password=saleh2&action=get_vod_streams&category_id=";
+        "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}&action=get_vod_streams&category_id=";
     dynamic data = await ApiClient.get(url: "$categoryUrl$id}");
     return data;
   }
@@ -96,80 +122,50 @@ class HomeCubit extends Cubit<HomeState> {
     required int id,
   }) async {
     String categoryUrl =
-        "http://ac-mega.pro/player_api.php?username=haya1&password=saleh2&action=get_series&category_id=";
+        "${user!.providerUrl}player_api.php?username=${user!.userName}&password=${user!.password}action=get_series&category_id=";
     dynamic data = await ApiClient.get(url: "$categoryUrl$id}");
     return data;
   }
 
   Future<void> getAmazon() async {
-    for (int i = 0; i < currentProvider!.amazonIds.length; i++) {
-      var data = await getMoviesById(id: currentProvider!.amazonIds[i]);
+    for (int i = 0; i < provider!.amazonIds.length; i++) {
+      var data = await getMoviesById(id: provider!.amazonIds[i]);
       for (int i = 0; i < data.length; i++) {}
     }
     emit(LoadingDataSuccess());
   }
 
   Future<void> getKids() async {
-    for (int i = 0; i < currentProvider!.kidsId.length; i++) {
-      var data = await getMoviesById(id: currentProvider!.kidsId[i]);
+    for (int i = 0; i < provider!.kidsId.length; i++) {
+      var data = await getMoviesById(id: provider!.kidsId[i]);
       for (int i = 0; i < data.length; i++) {}
     }
     emit(LoadingDataSuccess());
   }
 
   Future<void> getTops() async {
-    for (int i = 0; i < currentProvider!.kidsId.length; i++) {
-      var data = await getMoviesById(id: currentProvider!.kidsId[i]);
+    for (int i = 0; i < provider!.kidsId.length; i++) {
+      var data = await getMoviesById(id: provider!.kidsId[i]);
       for (int i = 0; i < data.length; i++) {}
     }
     emit(LoadingDataSuccess());
   }
 
   Future<void> getShahid() async {
-    for (int i = 0; i < currentProvider!.kidsId.length; i++) {
-      var data = await getSeriseById(id: currentProvider!.shahidIds[i]);
+    for (int i = 0; i < provider!.kidsId.length; i++) {
+      var data = await getSeriseById(id: provider!.shahidIds[i]);
       for (int i = 0; i < data.length; i++) {}
     }
     emit(LoadingDataSuccess());
   }
 
   Future<void> getNetfilx() async {
-    for (int i = 0; i < currentProvider!.kidsId.length; i++) {
+    for (int i = 0; i < provider!.kidsId.length; i++) {
       var data = await getSeriseById(
-        id: currentProvider!.netflixIds[i],
+        id: provider!.netflixIds[i],
       );
       for (int i = 0; i < data.length; i++) {}
     }
     emit(LoadingDataSuccess());
-  }
-
-  Future<void> getLocalData() async {
-    try {
-      var reference = await SharedPreferences.getInstance();
-      String userName = reference.getString('name')!;
-      String password = reference.getString('password')!;
-      String url = reference.getString('url')!;
-      String providerUrl = "${url.split(':')[0]}:${url.split(':')[1]}/";
-      user = UserModel.fromLocalDate(
-        userName: userName,
-        password: password,
-        providerUrl: providerUrl,
-      );
-      emit(LoadingDataSuccess());
-    } on Exception catch (_) {
-      emit(GetAllDataFaliure());
-    }
-  }
-
-  Future<void> loadData() async {
-    try {
-      await getLocalData();
-      await getLiveCategorys();
-      await getMoviesCategorys();
-      await getSeriesCategorys();
-      emit(LoadingDataSuccess());
-    } on Exception catch (_) {
-      emit(GetAllDataFaliure());
-    }
   }
 }

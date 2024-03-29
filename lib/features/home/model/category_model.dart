@@ -1,17 +1,24 @@
-class CategoryModel {
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'category_model.g.dart';
+
+@HiveType(typeId: 1)
+class CategoryModel extends HiveObject {
+  @HiveField(0)
   final String name;
+  @HiveField(1)
   final String id;
 
-  CategoryModel._({
+  CategoryModel({
     required this.name,
     required this.id,
   });
 
   factory CategoryModel.fromJson(
-     Map<String, dynamic> json,
+    Map<String, dynamic> json,
   ) {
-    return CategoryModel._(
-      name: json['category_name'],
+    return CategoryModel(
+      name: json['category_name'].toUpperCase(),
       id: json['category_id'],
     );
   }

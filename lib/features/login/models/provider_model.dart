@@ -1,7 +1,9 @@
 class ProviderModel {
   final String name, url, background, banner, logo, color, color2;
+  final int id;
   final List<dynamic> netflixIds, shahidIds, topIds, amazonIds, kidsId;
-  ProviderModel._({
+  ProviderModel._( {
+   required this.id,
     required this.name,
     required this.url,
     required this.background,
@@ -17,6 +19,7 @@ class ProviderModel {
   });
   factory ProviderModel.fromJson(Map<String, dynamic> json) {
     return ProviderModel._(
+      id: json['id'],
       name: json['Server Name'],
       url: json['url'],
       background: json['background'],

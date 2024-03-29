@@ -1,9 +1,10 @@
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:iptv/core/services/api_client.dart';
 import 'package:iptv/features/home/model/channal_model.dart';
 import 'package:iptv/features/login/models/user_model.dart';
 import 'package:meta/meta.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'series_state.dart';
 
@@ -11,7 +12,7 @@ class SeriesCubit extends Cubit<SeriesState> {
   SeriesCubit() : super(SeriesInitial());
   UserModel? user;
   List<ChannalModel> seriesChannals = [];
-
+  final searchCtrl = TextEditingController();
   Future<void> getSeriesChannalsById({
     required int id,
   }) async {
@@ -28,16 +29,8 @@ class SeriesCubit extends Cubit<SeriesState> {
 
   Future<void> getLocalData() async {
     try {
-      var reference = await SharedPreferences.getInstance();
-      String userName = reference.getString('name')!;
-      String password = reference.getString('password')!;
-      String url = reference.getString('url')!;
-      String providerUrl = "${url.split(':')[0]}:${url.split(':')[1]}/";
-      user = UserModel.fromLocalDate(
-        userName: userName,
-        password: password,
-        providerUrl: providerUrl,
-      );
+      final userBox = Hive.box<UserModel>('user');
+      user = userBox.values.toList()[0];
     } on Exception catch (_) {
       emit(LocalDataFailure());
     }

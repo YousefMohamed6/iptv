@@ -11,7 +11,9 @@ abstract class AssetsManager {
   static const String shahid = "assets/images/shahid.png";
   static const String top = "assets/images/top.png";
   static const String kids = "assets/images/kids.png";
+  static const String channalLogo = "assets/images/channal_icon.png";
   static const String provider = "assets/images/Provider.png";
   static const String circles = "assets/images/circles.png";
   static const String hour = "assets/images/Hour and weather.png";
+  static const String livePlayer = "assets/images/live_view.png";
 }

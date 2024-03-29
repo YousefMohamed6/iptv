@@ -7,16 +7,17 @@ class MyApp extends StatelessWidget {
   const MyApp._internal();
   static const MyApp instance = MyApp._internal();
   factory MyApp() => instance;
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => HomeCubit(),
       child: MaterialApp.router(
-          title: "IPTV",
-          theme: ThemeData.dark(),
-          debugShowCheckedModeBanner: false,
-          routerConfig: RouteManager.routConfig,
-        ),
+        title: "IPTV",
+        theme: ThemeData.dark(),
+        debugShowCheckedModeBanner: false,
+        routerConfig: RouteManager.routConfig,
+      ),
     );
   }
 }
