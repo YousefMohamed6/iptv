@@ -17,11 +17,10 @@ import 'package:iptv/features/streams/tops/tops_view.dart';
 abstract class RouteManager {
   static final userBox = Hive.box<UserModel>('user');
   static GoRouter routConfig = GoRouter(
-   initialLocation: LoginView.routePath,
-    // initialLocation:
-    // userBox.values.isNotEmpty
-    //     ? DownloadView.routePath
-        // : LoginView.routePath,
+    initialLocation:
+    userBox.values.isNotEmpty
+        ? DownloadView.routePath
+        : LoginView.routePath,
     routes: [
       GoRoute(
         path: LoginView.routePath,
