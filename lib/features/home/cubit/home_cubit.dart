@@ -16,12 +16,12 @@ class HomeCubit extends Cubit<HomeState> {
   List<CategoryModel> moviesCategorys = [];
   List<CategoryModel> seriseCategorys = [];
   UserModel? user;
-  int channalsId = 0;
+  int categoryId = 0;
   ProviderModel? provider;
   VlcPlayerController playerController = VlcPlayerController.network(
     'http://ac-mega.pro:80/live/haya1/saleh2/345191.ts',
     hwAcc: HwAcc.auto,
-    autoPlay: false,
+    autoPlay: true,
     allowBackgroundPlayback: true,
     autoInitialize: true,
     options: VlcPlayerOptions(),
@@ -39,7 +39,7 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void selectCategory({required int id}) {
-    channalsId = id;
+    categoryId = id;
   }
 
   Future<List<CategoryModel>> getCategories({

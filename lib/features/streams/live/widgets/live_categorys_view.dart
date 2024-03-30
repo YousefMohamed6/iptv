@@ -9,16 +9,24 @@ class LiveCategoriesView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HomeCubit, HomeState>(
+    return BlocBuilder<LiveCubit, LiveState>(
       builder: (context, state) {
         return CategoryView(
           categories: BlocProvider.of<HomeCubit>(context).liveCategorys,
-          onPressed: () {
-            int id = BlocProvider.of<HomeCubit>(context).channalsId;
+          categoryLenth:
+              BlocProvider.of<LiveCubit>(context).liveChannals.length,
+          onCategoryPressed: () {
+            int id = BlocProvider.of<HomeCubit>(context).categoryId;
             BlocProvider.of<LiveCubit>(context).getChannals(id: id);
           },
           searchCtrl: BlocProvider.of<LiveCubit>(context).searchController,
           channals: BlocProvider.of<LiveCubit>(context).liveChannals,
+          favouriteLenth:
+              BlocProvider.of<LiveCubit>(context).favouriteChannal.length,
+          onFavPressed: () {
+            BlocProvider.of<HomeCubit>(context).selectCategory(id: 0);
+            BlocProvider.of<LiveCubit>(context).getFavourite();
+          },
         );
       },
     );

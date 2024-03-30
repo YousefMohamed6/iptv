@@ -9,7 +9,7 @@ class CustomLogo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Image.asset(
       AssetsManager.iptv,
-      width: width ?? MediaQuery.sizeOf(context).width * 0.16,
+      width: width,
       height: height,
     );
   }

@@ -10,13 +10,12 @@ class ItemBackground extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       padding: const EdgeInsets.all(8),
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8),
         gradient: LinearGradient(
           begin: Alignment.bottomLeft,
           end: Alignment.topRight,
           colors: [
-            const Color(0xff999999),
-            const Color(0xffFFFFFF).withOpacity(0.3),
+            const Color(0xffFFFFFF).withOpacity(0.2),
+            const Color(0xff999999).withOpacity(0.2),
           ],
         ),
         color: ColorManager.primary,

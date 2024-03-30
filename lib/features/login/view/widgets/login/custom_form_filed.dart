@@ -5,31 +5,36 @@ class CutomTextFormFiled extends StatelessWidget {
   const CutomTextFormFiled({
     super.key,
     required this.controller,
-    required this.hintText,
+    required this.lableText,
     required this.prefixIcon,
     this.suffixIcon,
     this.obSecureText,
-    this.onChanged,
+    this.onFeildSubmmited,
     this.autovalidateMode,
+    this.fill,
+    this.margin,
   });
   final TextEditingController controller;
-  final String hintText;
+  final String lableText;
   final Widget prefixIcon;
   final Widget? suffixIcon;
   final bool? obSecureText;
-  final void Function(String)? onChanged;
+  final void Function(String)? onFeildSubmmited;
   final AutovalidateMode? autovalidateMode;
+  final Color? fill;
+  final double? margin;
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16),
+      margin: EdgeInsets.symmetric(horizontal: margin ?? 16),
       decoration: const BoxDecoration(
         borderRadius: BorderRadius.all(
           Radius.circular(16),
         ),
       ),
       child: TextFormField(
-        style: StyleManager.textStyle14,
+        style: StyleManager.textStyle14
+            .copyWith(fontSize: MediaQuery.sizeOf(context).width * 0.014),
         textAlign: TextAlign.center,
         controller: controller,
         obscureText: obSecureText ?? false,
@@ -37,7 +42,7 @@ class CutomTextFormFiled extends StatelessWidget {
             autovalidateMode ?? AutovalidateMode.onUserInteraction,
         onTapOutside: (event) => FocusManager.instance.primaryFocus?.unfocus(),
         keyboardType: TextInputType.emailAddress,
-        onFieldSubmitted: onChanged,
+        onFieldSubmitted: onFeildSubmmited,
         validator: (value) {
           if (value == null || value.isEmpty) {
             return 'This Filed is Required';
@@ -45,12 +50,13 @@ class CutomTextFormFiled extends StatelessWidget {
           return null;
         },
         decoration: InputDecoration(
-          fillColor: const Color(0xffCECECE).withOpacity(0.3),
+          fillColor: fill ?? const Color(0xffCECECE).withOpacity(0.3),
           filled: true,
-          labelText: hintText,
+          labelText: lableText,
           contentPadding: const EdgeInsets.all(4),
           labelStyle: StyleManager.textStyle14.copyWith(
             fontSize: MediaQuery.sizeOf(context).width * 0.016,
+            color: const Color(0xff000000),
           ),
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,

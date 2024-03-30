@@ -11,7 +11,7 @@ class IPTVItem extends StatelessWidget {
       child: Image.asset(
         fit: BoxFit.fill,
         imagePath,
-        width: MediaQuery.sizeOf(context).width * 0.15,
+        width: MediaQuery.sizeOf(context).width * 0.20,
         height: MediaQuery.sizeOf(context).height * 0.5,
       ),
     );

@@ -73,7 +73,7 @@ class LoginCubit extends Cubit<LoginState> {
     emit(ProviderLoading());
     try {
       List<ProviderModel> allProvider = [];
-      String url = "http://royplayer.com/api/ios/supplier.php";
+      String url = "https://royplayer.com/api/ios/supplier.php";
       var data = await ApiClient.get(url: url);
 
       for (int i = 0; i < data.length; i++) {

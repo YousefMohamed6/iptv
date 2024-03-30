@@ -13,7 +13,7 @@ class PasswordTextFiled extends StatelessWidget {
         return CutomTextFormFiled(
           controller: BlocProvider.of<LoginCubit>(context).password,
           obSecureText: BlocProvider.of<LoginCubit>(context).obSecureText,
-          hintText: "Password",
+          lableText: "Password",
           prefixIcon: const Icon(Icons.lock_outline),
           suffixIcon: IconButton(
             onPressed: () {

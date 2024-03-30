@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:iptv/core/widgets/category/category_item.dart';
 import 'package:iptv/core/widgets/custom_table_view.dart';
 import 'package:iptv/core/widgets/favourite/favourite_item.dart';
 import 'package:iptv/core/widgets/search_text_feild.dart';
-import 'package:iptv/features/home/cubit/home_cubit.dart';
 import 'package:iptv/features/home/model/category_model.dart';
 import 'package:iptv/features/home/model/channal_model.dart';
-import 'package:iptv/features/streams/live/controller/live_cubit.dart';
 
 class CateogoryListView extends StatelessWidget {
   const CateogoryListView({
     super.key,
     required this.categories,
-    required this.onPressed, required this.channals, required this.searchCtrl,
+    required this.onCategoryPressed,
+    required this.channals,
+    required this.searchCtrl,
+    required this.favouriteLenth,
+    required this.onFavPressed, required this.categoryLenth,
   });
   final List<CategoryModel> categories;
-  final VoidCallback onPressed;
+  final VoidCallback onCategoryPressed;
   final List<ChannalModel> channals;
   final TextEditingController searchCtrl;
+  final int favouriteLenth;
+  final VoidCallback onFavPressed;
+  final int categoryLenth;
   @override
   Widget build(BuildContext context) {
     return CustomTableView(
@@ -28,12 +32,9 @@ class CateogoryListView extends StatelessWidget {
             channals: channals,
             searchCtrl: searchCtrl,
           ),
-           FavouriteItem(
-            favouriteLenth: BlocProvider.of<LiveCubit>(context).favouriteChannal.length,
-            onPressed: () {
-                 BlocProvider.of<HomeCubit>(context).selectCategory(id: 0);
-        BlocProvider.of<LiveCubit>(context).getFavourite();
-            },
+          FavouriteItem(
+            favouriteLenth: favouriteLenth,
+            onPressed: onFavPressed,
           ),
           Expanded(
             child: ListView.builder(
@@ -41,7 +42,8 @@ class CateogoryListView extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: (context, index) => CategoryItem(
                 category: categories[index],
-                onPressed: onPressed,
+                onPressed: onCategoryPressed,
+                categoryLenth: categoryLenth,
               ),
             ),
           ),

@@ -19,11 +19,16 @@ class SearchTextFeiled extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: CutomTextFormFiled(
+        margin: 0,
+        fill: Colors.white,
         controller: searchCtrl,
-        hintText: "Search",
-        prefixIcon: const Icon(Icons.search),
+        lableText: "Search",
+        prefixIcon: const Icon(
+          Icons.search,
+          color: Color(0xff000000),
+        ),
         autovalidateMode: AutovalidateMode.disabled,
-        onChanged: (word) {
+        onFeildSubmmited: (word) {
           BlocProvider.of<LiveCubit>(context).search(
             word: word,
             channals: BlocProvider.of<LiveCubit>(context).liveChannals,

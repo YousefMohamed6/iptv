@@ -9,7 +9,7 @@ class ChannalNumber extends StatelessWidget {
     return Text(
       '$number',
       style: StyleManager.textStyle14.copyWith(
-        fontSize: MediaQuery.sizeOf(context).width * 0.020,
+        fontSize: MediaQuery.sizeOf(context).width * 0.0120,
       ),
       overflow: TextOverflow.clip,
     );

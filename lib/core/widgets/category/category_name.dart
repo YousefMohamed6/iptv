@@ -13,13 +13,13 @@ class CategoryName extends StatelessWidget {
     return Text(
       category.name,
       style: StyleManager.textStyle16.copyWith(
-        color: BlocProvider.of<HomeCubit>(context).channalsId ==
+        color: BlocProvider.of<HomeCubit>(context).categoryId ==
                 int.parse(
                   category.id,
                 )
             ? ColorManager.yollew
             : Colors.white,
-        fontSize: MediaQuery.sizeOf(context).width * 0.020,
+        fontSize: MediaQuery.sizeOf(context).width * 0.012,
       ),
     );
   }

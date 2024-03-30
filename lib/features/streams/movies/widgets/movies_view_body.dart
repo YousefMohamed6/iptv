@@ -15,17 +15,17 @@ class MoviesViewBody extends StatelessWidget {
         return Row(
           children: [
             CategoryView(
+              favouriteLenth: 0,
+              categoryLenth: 0,
+              onFavPressed: () {},
               categories: BlocProvider.of<HomeCubit>(context).moviesCategorys,
-              onPressed: () {
-                int id = BlocProvider.of<HomeCubit>(context).channalsId;
+              onCategoryPressed: () {
+                int id = BlocProvider.of<HomeCubit>(context).categoryId;
                 BlocProvider.of<MoviesCubit>(context)
                     .getMoviesChannalsById(id: id);
               },
-              channals: BlocProvider.of<MoviesCubit>(context)
-                    .moviesChannals,
-              searchCtrl: BlocProvider.of<MoviesCubit>(context)
-                    .searcCtrl,
-              
+              channals: BlocProvider.of<MoviesCubit>(context).moviesChannals,
+              searchCtrl: BlocProvider.of<MoviesCubit>(context).searcCtrl,
             ),
             ChannallView(
               channals: BlocProvider.of<MoviesCubit>(context).moviesChannals,

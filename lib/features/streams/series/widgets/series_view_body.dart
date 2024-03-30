@@ -15,9 +15,12 @@ class SeriesViewBody extends StatelessWidget {
         return Row(
           children: [
             CategoryView(
+              favouriteLenth: 0,
+              categoryLenth: 0,
+              onFavPressed: () {},
               categories: BlocProvider.of<HomeCubit>(context).seriseCategorys,
-              onPressed: () {
-                int id = BlocProvider.of<HomeCubit>(context).channalsId;
+              onCategoryPressed: () {
+                int id = BlocProvider.of<HomeCubit>(context).categoryId;
                 BlocProvider.of<SeriesCubit>(context)
                     .getSeriesChannalsById(id: id);
               },

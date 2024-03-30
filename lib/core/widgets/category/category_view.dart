@@ -7,20 +7,28 @@ class CategoryView extends StatelessWidget {
   const CategoryView({
     super.key,
     required this.categories,
-    required this.onPressed,
+    required this.onCategoryPressed,
     required this.channals,
     required this.searchCtrl,
+    required this.favouriteLenth,
+    required this.onFavPressed, required this.categoryLenth,
   });
   final List<CategoryModel> categories;
-  final VoidCallback onPressed;
+  final VoidCallback onCategoryPressed;
   final List<ChannalModel> channals;
   final TextEditingController searchCtrl;
+  final int favouriteLenth;
+  final VoidCallback onFavPressed;
+  final int categoryLenth;
   @override
   Widget build(BuildContext context) {
     return Expanded(
       child: CateogoryListView(
+        categoryLenth: categoryLenth,
+        favouriteLenth: favouriteLenth,
+        onFavPressed: onFavPressed,
         categories: categories,
-        onPressed: onPressed,
+        onCategoryPressed: onCategoryPressed,
         channals: channals,
         searchCtrl: searchCtrl,
       ),

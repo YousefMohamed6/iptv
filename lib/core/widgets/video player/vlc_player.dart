@@ -4,8 +4,10 @@ import 'package:flutter_vlc_player/flutter_vlc_player.dart';
 import 'package:iptv/features/home/cubit/home_cubit.dart';
 
 class VlcPlayerView extends StatefulWidget {
-  const VlcPlayerView({super.key, required this.url});
-  final String url;
+  const VlcPlayerView({
+    super.key,
+  });
+
   @override
   State<VlcPlayerView> createState() => _VlcPlayerViewState();
 }

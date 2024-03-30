@@ -10,7 +10,7 @@ class EmailTextField extends StatelessWidget {
   Widget build(BuildContext context) {
     return CutomTextFormFiled(
       controller: BlocProvider.of<LoginCubit>(context).email,
-      hintText: "Username",
+      lableText: "Username",
       prefixIcon: const Icon(Icons.person_2_outlined),
       suffixIcon: const SizedBox(),
     );

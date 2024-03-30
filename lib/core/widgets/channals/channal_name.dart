@@ -9,7 +9,7 @@ class ChannalName extends StatelessWidget {
     return Text(
       name,
       style: StyleManager.textStyle14.copyWith(
-        fontSize: MediaQuery.sizeOf(context).width * 0.024,
+        fontSize: MediaQuery.sizeOf(context).width * 0.010,
       ),
       overflow: TextOverflow.fade,
       maxLines: 1,
